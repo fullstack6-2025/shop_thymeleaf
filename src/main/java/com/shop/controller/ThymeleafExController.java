@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.dto.ItemDto;
 
@@ -59,6 +60,61 @@ public class ThymeleafExController {
         return "thymeleafEx/thymeleafEx03";
     }
 
+    @GetMapping(value = "/ex04")					// http://localhost:8082/thymeleaf/ex04
+    public String thymeleafExample04(Model model){
 
+        List<ItemDto> itemDtoList = new ArrayList<>();
+
+        for(int i=1;i<=10;i++){
+
+            ItemDto itemDto = new ItemDto();
+            itemDto.setItemDetail("상품 상세 설명"+i);
+            itemDto.setItemNm("테스트 상품" + i);
+            itemDto.setPrice(1000*i);
+            itemDto.setRegTime(LocalDateTime.now());
+
+            itemDtoList.add(itemDto);
+        }
+
+        model.addAttribute("itemDtoList", itemDtoList);
+        return "thymeleafEx/thymeleafEx04";
+    }
+
+    @GetMapping(value = "/ex05")
+    public String thymeleafExample05(){
+        return "thymeleafEx/thymeleafEx05";
+    }
+    
+    @GetMapping(value = "/ex06")	//http://localhost:8082/thymeleaf/ex06?param1=홍길동&param2=50
+    public String thymeleafExample06(
+    		@RequestParam(name="param1", defaultValue="이름없음")
+    		String param1, 
+    		@RequestParam(name="param2", defaultValue="0")
+    		String param2, Model model){
+    	
+    	System.out.println(param1);
+    	System.out.println(param2);
+    	
+        model.addAttribute("param1", param1);
+        model.addAttribute("param2", param2);
+        return "thymeleafEx/thymeleafEx06";
+    }
+    
+    @GetMapping("/ex06-1")
+    public String formView () {
+    	return "thymeleafEx/thymeleafEx06-1"; 
+    }
+
+    @GetMapping("/ex06-2")
+    public void formPrint(
+    		@RequestParam("id") String id , 
+    		@RequestParam("pwd") String pwd
+    		)
+    {
+    	System.out.println(id);
+    	System.out.println(pwd);
+    	
+    	
+    }
 
 }
