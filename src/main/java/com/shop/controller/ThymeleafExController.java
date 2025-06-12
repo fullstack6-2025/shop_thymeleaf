@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.dto.ItemDto;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller		// IoC 컨테이너에 빈(객체) 등록 
 @RequestMapping(value="/thymeleaf")       // get,post 요청 모두 처리 
@@ -106,15 +109,27 @@ public class ThymeleafExController {
     }
 
     @GetMapping("/ex06-2")
-    public void formPrint(
+    public String formPrint(
     		@RequestParam("id") String id , 
     		@RequestParam("pwd") String pwd
     		)
     {
-    	System.out.println(id);
-    	System.out.println(pwd);
-    	
-    	
+    	System.out.println("get id : " + id);
+    	System.out.println("get pwd : " + pwd);
+    	return "redirect:/thymeleaf/ex05" ; 	// http://localhost:8082/thymeleaf/ex05
     }
+    
+    @PostMapping("/ex06-3")					// http://localhost:8082/thymeleaf/ex06-3
+    public String formPost(
+    		@RequestParam("id") String id , 
+    		@RequestParam("pwd") String pwd
+    		) {
+    	
+    	System.out.println("post id : " + id);
+    	System.out.println("post pwd : " + pwd);
+    	
+        return "redirect:/thymeleaf/ex05";   // http://localhost:8082/thymeleaf/ex05
+    }
+    
 
 }
