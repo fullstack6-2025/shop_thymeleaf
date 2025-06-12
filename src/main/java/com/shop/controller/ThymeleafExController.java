@@ -131,6 +131,8 @@ public class ThymeleafExController {
         return "redirect:/thymeleaf/ex05";   // http://localhost:8082/thymeleaf/ex05
     }
     
+    
+    // 타임리프 레이아웃 
     @GetMapping(value = "/ex07")			// http://localhost:8082/thymeleaf/ex07
     public String thymeleafExample07(){
         return "thymeleafEx/thymeleafEx07";
