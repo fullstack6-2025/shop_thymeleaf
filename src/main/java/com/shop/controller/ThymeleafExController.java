@@ -119,7 +119,7 @@ public class ThymeleafExController {
     	return "redirect:/thymeleaf/ex05" ; 	// http://localhost:8082/thymeleaf/ex05
     }
     
-    @PostMapping("/ex06-3")					// http://localhost:8082/thymeleaf/ex06-3
+    @PostMapping("/ex06-3")					// http://localhost:8082/thymeleaf/ex06-1
     public String formPost(
     		@RequestParam("id") String id , 
     		@RequestParam("pwd") String pwd
@@ -130,6 +130,12 @@ public class ThymeleafExController {
     	
         return "redirect:/thymeleaf/ex05";   // http://localhost:8082/thymeleaf/ex05
     }
+    
+    @GetMapping(value = "/ex07")			// http://localhost:8082/thymeleaf/ex07
+    public String thymeleafExample07(){
+        return "thymeleafEx/thymeleafEx07";
+    }
+
     
 
 }
