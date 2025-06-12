@@ -19,17 +19,18 @@
 
 </head>
 <body>
-	<h2> 헤더 영역 </h2> <hr>
-	<!--
+
+	<!-- 헤더 영역 -->
     <div th:replace="~{fragments/header::header}"></div>
-	-->
+	
+	
     <div layout:fragment="content" class="content">
 
     </div>
 
-	<hr> <h2> 푸터 영역 </h2>
-	<!--
+
+	<!-- 푸터 영역 	-->
     <div th:replace="~{fragments/footer::footer}"></div>
-	-->
+
 </body>
 </html>

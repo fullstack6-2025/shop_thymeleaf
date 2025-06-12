@@ -136,6 +136,9 @@ public class ThymeleafExController {
         return "thymeleafEx/thymeleafEx07";
     }
 
-    
+    @GetMapping(value = "/ex08")			// http://localhost:8082/thymeleaf/ex08
+    public String thymeleafExample08(){
+        return "thymeleafEx/thymeleafEx08";
+    }
 
 }
