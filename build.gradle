@@ -24,8 +24,23 @@ repositories {
 }
 
 dependencies {
+	////////  DB 라이브러리 :  H2, Oracle, MySQL, JDBC 라이브러리 ////////////////////////
 	// H2 DB 
 	runtimeOnly 'com.h2database:h2'
+	
+	//MySQL Driver
+	implementation 'com.mysql:mysql-connector-j:8.0.33'
+           
+    //oracle 라이브러리 
+	//implementation 'com.oracle.database.jdbc:ojdbc10'
+	implementation 'com.oracle.database.jdbc:ojdbc11'
+	
+	//JDBC
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	
+	/////////////////////////////////////////////////////////////////////////////////
+	
+	
 	// ORM : JPA
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	
