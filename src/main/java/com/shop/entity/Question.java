@@ -23,7 +23,4 @@ public class Question {
 
 	private LocalDateTime createDate;
 
-	private LocalDateTime modifyDate;
-
-	
 }
