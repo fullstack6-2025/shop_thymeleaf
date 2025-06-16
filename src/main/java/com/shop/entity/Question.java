@@ -29,6 +29,7 @@ public class Question {
 
 	private LocalDateTime createDate;
 	
+	// 질문에 대한 답변 글이 저장된 리스트 
 	@OneToMany(mappedBy="question" , cascade=CascadeType.REMOVE)
 	private List<Answer> answerList; 
 

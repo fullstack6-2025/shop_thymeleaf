@@ -28,7 +28,7 @@ public class Insert_Answer {
 		//1. 답변 테이블에 값을 넣기 위해서는 어떤 질문에 대한 답변인지 가지고 와야 한다. 
 		//   답변을 저장 할 Question객체를 먼저 가져와야 한다. 
 		Optional<Question> oq = 
-				questionRepository.findById(1); 
+				questionRepository.findById(2); 
 		
 		Question q = new Question(); 
 		if (oq.isPresent()) {
@@ -37,7 +37,7 @@ public class Insert_Answer {
 		
 		// 2. Answer 객체에 setter 를 사용해서 답글을 입력한다. 
 		Answer a = new Answer(); 
-		a.setContent("1 번 질문에 대한 답변 1");
+		a.setContent("2 번 질문에 대한 답변 2");
 		a.setCreateDate(LocalDateTime.now());
 		a.setQuestion(q);
 		
