@@ -11,40 +11,37 @@ import com.shop.entity.Answer;
 import com.shop.entity.Question;
 
 @SpringBootTest
-public class Insert_Answer {
-	
-	// 답변 테이블에 값넣기 
-	
-	@Autowired
-	QuestionRepository questionRepository;
+public class Insert_Answer2 {
 	
 	@Autowired
 	AnswerRepository answerRepository; 
 	
+	@Autowired
+	QuestionRepository questionRepository; 
 	
 	@Test
-	 void insertAnswer() {
-		
-		//1. 답변 테이블에 값을 넣기 위해서는 어떤 질문에 대한 답변인지 가지고 와야 한다. 
-		//   답변을 저장 할 Question객체를 먼저 가져와야 한다. 
+	void insertAnswer2() {
+		// 1. 어떤 질문에 대한 답글 인지 (답변글을 넣을 Question 객체를 가지고 와야함) 
 		Optional<Question> oq = 
-				questionRepository.findById(3); 
+				questionRepository.findById(4); 
 		
 		Question q = new Question(); 
+		
 		if (oq.isPresent()) {
 			q = oq.get(); 
 		}
 		
-		// 2. Answer 객체에 setter 를 사용해서 답글을 입력한다. 
+		// 2. Answer 에 답변을 저장 
 		Answer a = new Answer(); 
-		a.setContent("3 번 질문에 대한 답변 5");
-		a.setCreateDate(LocalDateTime.now());
-		a.setQuestion(q);
 		
-		// 3. AnswerRepository를 사용한 저장 
+		a.setContent("4번 글에 대한 답변 4");
+		a.setCreateDate(LocalDateTime.now());
+		a.setQuestion(q); 
+		
+		// 3. AnswerRepository save() 를 사용해서 저장 
 		
 		answerRepository.save(a); 
-		 
-	 }
+		
+	}
 
 }

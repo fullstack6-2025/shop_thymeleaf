@@ -25,7 +25,7 @@ public class Select_AnswerList {
 	void selectAnswerList() {
 		// 1번 질문에 대한 답변들을 출력 
 		Optional<Question> oq = 
-				questionRepository.findById(1); 
+				questionRepository.findById(3); 
 		
 		Question q = new Question(); 
 		
