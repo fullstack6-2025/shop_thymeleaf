@@ -1,8 +1,13 @@
 package com.shop.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import com.shop.ShopThymeleafApplication;
+import com.shop.entity.Question;
 import com.shop.repository.QuestionRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,11 +27,29 @@ import lombok.RequiredArgsConstructor;
  * 				
  */
 
+// Controller 의 역활 : 1. client의 요청을 받는다. => 2. 비즈니스 로직 처리 => 3. 뷰페이지 전송 
+
 @RequiredArgsConstructor
 @Controller
 public class QuestionController {
-	
+
 	private final QuestionRepository questionRepository;
+
+	
+	@GetMapping("/question/list")				//http://localhost:8082/question/list    ( 1.client 요청 ) 
+	public String list(Model model) {
+		
+		// 2. 비즈니스 로직 처리 (백엔드 로직 처리, ) 
+		List<Question> questionList = 
+				questionRepository.findAll(); 
+		
+		// 모델 객체에 변수의 값을 담아서 clinet 페이지로 전송 
+		model.addAttribute("questionList", questionList); 
+		
+		
+//		System.out.println("컨트롤러 요청 성공 ");
+		return "question_list";                    // 3. 뷰 페이지 전송 
+	}
 	
 	
 
