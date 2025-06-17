@@ -68,14 +68,16 @@ public class QuestionController {
 			@PathVariable("id") Integer id 
 			) {
 		
-		System.out.println("id 변수의 값 : " + id);
+		//System.out.println("id 변수의 값 : " + id);
 		// 넘겨받은 id 값을 가지고 QuestionRepository.findById(id); 
 		Question question = 
 				questionService.getQuestion(id);
-		
+		/*
 		System.out.println(question.getSubject());
 		System.out.println(question.getContent());
 		System.out.println(question.getId());
+		*/
+		model.addAttribute("question", question); 
 		
 		return "question_detail"; 
 	}

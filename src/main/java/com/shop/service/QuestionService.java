@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.shop.entity.Question;
+import com.shop.exception.DataNotFoundException;
 import com.shop.repository.QuestionRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,14 @@ public class QuestionService {
 		Optional<Question> question = 
 				questionRepository.findById(id); 
 		
-		return question.get(); 
+		// Optional 의 Question 객체를 끄집어 낼때 NULL 아닌 경우 끄집어 내야 한다. 만약에 NULL인 경우 예외 처리 필요. 
+		if (question.isPresent()) {
+			return question.get(); 
+		}else {
+			// 예외를 강제로 발생 시킴 : 프로그램이 종료 되지 않도록 예외 처리.  
+			throw new DataNotFoundException("질문 데이터를 찾지 못했습니다. "); 
+		}
+		
 	}
 
 }
