@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.shop.ShopThymeleafApplication;
@@ -45,6 +46,7 @@ public class QuestionController {
 
 	private final QuestionService questionService; 
 	
+	// 질문 리스트 페이지
 	@GetMapping("/list")				//http://localhost:8082/question/list    ( 1.client 요청 ) 
 	public String list(Model model) {
 		
@@ -60,6 +62,23 @@ public class QuestionController {
 		return "question_list";                    // 3. 뷰 페이지 전송 
 	}
 	
+	// 질문 상세 페이지 
+	@GetMapping("/detail/{id}")
+	public String detail(Model model,
+			@PathVariable("id") Integer id 
+			) {
+		
+		System.out.println("id 변수의 값 : " + id);
+		// 넘겨받은 id 값을 가지고 QuestionRepository.findById(id); 
+		Question question = 
+				questionService.getQuestion(id);
+		
+		System.out.println(question.getSubject());
+		System.out.println(question.getContent());
+		System.out.println(question.getId());
+		
+		return "question_detail"; 
+	}
 	
 
 
