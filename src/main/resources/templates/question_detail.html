@@ -1,5 +1,12 @@
+<!-- 질문의 제목과 내용을 출력 -->
 <h1 th:text ="${question.subject}">제목</h1>
 <div th:text="${question.content}">내용</div>
+
+<!-- 답글의 내용을 출력-->
+<h5 th:text = "|${#lists.size(question.answerList)} 개의 답변글이 있습니다. |"> </h5>
+<ul>
+	<li th:each ="answer: ${question.answerList}" th:text="${answer.content}"></li>
+</ul>
 
 <form th:action="@{|/answer/create/${question.id}|}" method="post">
 	<textarea name="content" id="content" rows="15"></textarea>

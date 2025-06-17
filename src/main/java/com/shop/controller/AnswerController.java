@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.shop.entity.Question;
 import com.shop.service.AnswerService;
+import com.shop.service.QuestionService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +22,7 @@ public class AnswerController {
 	
 	// 빈주입 
 	private final AnswerService answerService;
+	private final QuestionService questionService; 
 	
 	// 답변 등록 
 	@PostMapping("/create/{id}")
@@ -29,11 +32,20 @@ public class AnswerController {
 			@RequestParam("content") String content
 			) {
 		
+		// 답변을 넣은 질문을 가지고 온다. 
+		Question question = questionService.getQuestion(id); 
+		
+		/*
 		System.out.println("답글 등록 요청 성공!!!!");
 		System.out.println("답글을 위한 question_id : " + id);
 		System.out.println("답글 내용 : " + content);
+		*/ 
 		
-		return null ; 
+		// 답변을 DB에 저장
+		answerService.create(question, content);
+		
+		
+		return String.format("redirect:/question/detail/%s", id) ; 
 		
 	}
 	
