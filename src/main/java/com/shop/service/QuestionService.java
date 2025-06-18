@@ -1,5 +1,6 @@
 package com.shop.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +38,17 @@ public class QuestionService {
 			// 예외를 강제로 발생 시킴 : 프로그램이 종료 되지 않도록 예외 처리.  
 			throw new DataNotFoundException("질문 데이터를 찾지 못했습니다. "); 
 		}
-		
 	}
+	
+	// 질문 등록 
+	public void create(String subject, String content ) {
+		Question question = new Question(); 
+		question.setSubject(subject);
+		question.setContent(content);
+		question.setCreateDate(LocalDateTime.now());
+		
+		questionRepository.save(question); 
+	}
+	
 
 }
