@@ -50,6 +50,7 @@ public class AnswerController {
 		
 		// 만약에 content의 값이 비어있을때  question_detail 페이지 
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("question", question); 
 			return "question_detail";
 		}
 		
