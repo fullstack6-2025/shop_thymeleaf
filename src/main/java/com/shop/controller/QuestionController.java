@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.ShopThymeleafApplication;
 import com.shop.entity.Question;
@@ -15,6 +17,7 @@ import com.shop.repository.QuestionRepository;
 import com.shop.service.QuestionService;
 
 import lombok.RequiredArgsConstructor;
+import oracle.jdbc.proxy.annotation.Post;
 
 // Ioc 컨테이너에 빈(객체)등록 어노테이션 
 /*
@@ -80,6 +83,30 @@ public class QuestionController {
 		model.addAttribute("question", question); 
 		
 		return "question_detail"; 
+	}
+	
+	// 질문 등록 뷰 페이지 처리 
+	
+	@GetMapping("/create")
+	public String questionCreate() {
+		
+		return "question_form"; 
+	}
+	
+	// 질문 등록을 받아서 DB에 저장 
+	@PostMapping("/create")
+	public String questionCreat(
+			@RequestParam(value="subject") String subject, 
+			@RequestParam("content") String content
+			) {
+		
+		System.out.println("질문 등록 Post 요청 성공 ");
+		System.out.println(subject);
+		System.out.println(content);
+		
+		
+		// 질문을 DB에 저장후 질문 리스트 페이지로 이동 
+		return "redirect:/question/list"; 
 	}
 	
 
