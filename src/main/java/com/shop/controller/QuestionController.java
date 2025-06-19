@@ -3,6 +3,7 @@ package com.shop.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -56,14 +57,35 @@ public class QuestionController {
 	
 	// 질문 리스트 페이지
 	@GetMapping("/list")				//http://localhost:8082/question/list    ( 1.client 요청 ) 
-	public String list(Model model) {
+	public String list(Model model,
+			@RequestParam(name="page", defaultValue="0") int page
+			
+			) {
 		
 		// 2. 비즈니스 로직 처리 (백엔드 로직 처리, ) 
+		// 모든 레코드를 담는다. 
 		List<Question> questionList = 
-				questionService.getList(); 
+				questionService.getList();
+		
+//		System.out.println("요청한 페이지 번호 : " + page);
+		
+		// 페이징 처리된 값
+		Page<Question> paging = 
+				questionService.getList(page); 
+		System.out.println("====페이징 관련 필드 출력 ===");
+		System.out.println("요청한 페이지 번호 : " + paging.getNumber());
+		System.out.println("페이지의 레코드 수 : " + paging.getSize());
+		System.out.println("DB의 레코드의 전체 갯수 : " + paging.getTotalElements());
+		System.out.println("전체 페이지수 : " + paging.getTotalPages());
+		System.out.println("다음 페이지가 존재하면 true : " + paging.hasNext());
+		System.out.println("이전 페이지가 존재하면 true " + paging.hasPrevious());
+		
+		
+		
 		
 		// 모델 객체에 변수의 값을 담아서 clinet 페이지로 전송 
-		model.addAttribute("questionList", questionList); 
+		//model.addAttribute("questionList", questionList); 
+		model.addAttribute("paging", paging); 
 		
 		
 //		System.out.println("컨트롤러 요청 성공 ");

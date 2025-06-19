@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.shop.entity.Question;
@@ -49,6 +52,15 @@ public class QuestionService {
 		
 		questionRepository.save(question); 
 	}
+	
+	// 질문 리스트 (페이징 처리된) 
+    public Page<Question> getList(int page) {
+    	
+    	
+        Pageable pageable = PageRequest.of(page, 10);
+        return this.questionRepository.findAll(pageable);
+    }
+
 	
 
 }
