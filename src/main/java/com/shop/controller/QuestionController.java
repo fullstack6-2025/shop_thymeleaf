@@ -72,6 +72,8 @@ public class QuestionController {
 		// 페이징 처리된 값
 		Page<Question> paging = 
 				questionService.getList(page); 
+		
+		
 		System.out.println("====페이징 관련 필드 출력 ===");
 		System.out.println("요청한 페이지 번호 : " + paging.getNumber());
 		System.out.println("페이지의 레코드 수 : " + paging.getSize());
@@ -79,6 +81,7 @@ public class QuestionController {
 		System.out.println("전체 페이지수 : " + paging.getTotalPages());
 		System.out.println("다음 페이지가 존재하면 true : " + paging.hasNext());
 		System.out.println("이전 페이지가 존재하면 true " + paging.hasPrevious());
+		System.out.println("비어있으면 true : " + paging.isEmpty());
 		
 		
 		

@@ -1,12 +1,14 @@
 package com.shop.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.shop.entity.Question;
@@ -56,8 +58,11 @@ public class QuestionService {
 	// 질문 리스트 (페이징 처리된) 
     public Page<Question> getList(int page) {
     	
+    	// 정렬하는 sort 객체 생성 
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
     	
-        Pageable pageable = PageRequest.of(page, 10);
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
         return this.questionRepository.findAll(pageable);
     }
 
