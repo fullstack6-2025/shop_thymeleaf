@@ -1,7 +1,13 @@
 package com.shop.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.shop.entity.Answer;
@@ -29,4 +35,16 @@ public class AnswerService {
 		System.out.println("답변이 성공적으로 잘 저장되었습니다. ");
 		
 	}
+	
+	
+	// 답변 리스트 (페이징 처리된) - 해당 질문에 대한 답변만 페이징 처리
+    public Page<Answer> getList(Question question, int page) {
+    	
+    	// 정렬하는 sort 객체 생성 
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+    	
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+        return this.answerRepository.findByQuestion(question, pageable); 
+    }
 }

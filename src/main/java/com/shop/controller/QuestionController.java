@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.shop.ShopThymeleafApplication;
 import com.shop.dto.AnswerForm;
 import com.shop.dto.QuestionForm;
+import com.shop.entity.Answer;
 import com.shop.entity.Question;
 import com.shop.repository.QuestionRepository;
+import com.shop.service.AnswerService;
 import com.shop.service.QuestionService;
 
 import jakarta.validation.Valid;
@@ -54,6 +56,7 @@ public class QuestionController {
 //	private final QuestionRepository questionRepository;
 
 	private final QuestionService questionService; 
+	private final AnswerService answerService; 
 	
 	// 질문 리스트 페이지
 	@GetMapping("/list")				//http://localhost:8082/question/list    ( 1.client 요청 ) 
@@ -99,19 +102,24 @@ public class QuestionController {
 	@GetMapping("/detail/{id}")
 	public String detail(Model model,
 			@PathVariable("id") Integer id ,
-			AnswerForm answerForm
+			AnswerForm answerForm, 
+			@RequestParam(name="page", defaultValue="0") int page
 			) {
 		
 		//System.out.println("id 변수의 값 : " + id);
 		// 넘겨받은 id 값을 가지고 QuestionRepository.findById(id); 
 		Question question = 
 				questionService.getQuestion(id);
+		
+		Page<Answer> paging = answerService.getList(question, page); 
+		
 		/*
 		System.out.println(question.getSubject());
 		System.out.println(question.getContent());
 		System.out.println(question.getId());
 		*/
-		model.addAttribute("question", question); 
+		model.addAttribute("question", question);
+		model.addAttribute("paging", paging); 
 		
 		return "question_detail"; 
 	}
