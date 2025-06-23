@@ -20,11 +20,13 @@ public class UserController {
 	
 	private final UserService userService; 
 	
+	// 회원 가입 (뷰 페이지)
     @GetMapping("/signup")
     public String signup(UserCreateForm userCreateForm) {
         return "signup_form";
     }
 
+    // 회원 가입 처리 (DB에 저장)
     @PostMapping("/signup")
     public String signup(@Valid UserCreateForm userCreateForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -55,6 +57,14 @@ public class UserController {
 
         return "redirect:/";
     }
+
+    // 로그인 뷰 페이지 처리 
+    @GetMapping("/login")
+    public String login() {
+        return "login_form";
+    }
+    
+    // 로그인 처리 : <== Spring Security 에서 처리함. <== /user/login 의 post 매핑은 Security 에서 처리됨 
 
 	
 

@@ -26,6 +26,10 @@ public class SecurityConfig {
             .headers((headers) -> headers
                     .addHeaderWriter(new XFrameOptionsHeaderWriter(
                         XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
+            // 폼 로그인 처리 
+            .formLogin((formLogin) -> formLogin
+                    .loginPage("/user/login")
+                    .defaultSuccessUrl("/"))
 
 
         ;
