@@ -1,5 +1,7 @@
 package com.shop.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.dto.AnswerForm;
 import com.shop.entity.Question;
+import com.shop.entity.SiteUser;
 import com.shop.service.AnswerService;
 import com.shop.service.QuestionService;
+import com.shop.service.UserService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +30,7 @@ public class AnswerController {
 	// 빈주입 
 	private final AnswerService answerService;
 	private final QuestionService questionService; 
+	private final UserService userService;
 	
 	// 답변 등록 
 	@PostMapping("/create/{id}")
@@ -35,13 +40,16 @@ public class AnswerController {
 //			@RequestParam("content") String content
 			
 			@Valid AnswerForm answerForm, 
-			BindingResult bindingResult
-			
+			BindingResult bindingResult,
+			Principal principal	
 			) {
+		// principal : client 의 로그인한 계정을 서버에서 가지고 오는 객체 
+		System.out.println("Principal : " + principal.getName());
 		
 		// 답변을 넣은 질문을 가지고 온다. 
 		Question question = questionService.getQuestion(id); 
-		
+		// 답변에 넣을 SiteUser 객체를 가지고 온다. 
+		SiteUser siteUser = this.userService.getUser(principal.getName());
 		/*
 		System.out.println("답글 등록 요청 성공!!!!");
 		System.out.println("답글을 위한 question_id : " + id);
@@ -56,7 +64,7 @@ public class AnswerController {
 		
 		
 		// 답변을 DB에 저장
-		answerService.create(question, answerForm.getContent());
+		answerService.create(question, answerForm.getContent(), siteUser );
 		
 		
 		return String.format("redirect:/question/detail/%s", id) ; 

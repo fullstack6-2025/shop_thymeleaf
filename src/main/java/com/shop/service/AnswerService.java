@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.shop.entity.Answer;
 import com.shop.entity.Question;
+import com.shop.entity.SiteUser;
 import com.shop.repository.AnswerRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -23,12 +24,13 @@ public class AnswerService {
 	private final AnswerRepository answerRepository;
 	
 	// 답글 등록 (insert, update, delete 리턴이 없다), (select 인 경우는 select 한 값을 돌려 줘야한다. ) 
-	public void create (Question question, String content ) {
+	public void create (Question question, String content, SiteUser author ) {
 		Answer answer = new Answer(); 
 		
 		answer.setContent(content);
 		answer.setCreateDate(LocalDateTime.now());
 		answer.setQuestion(question);
+		answer.setAuthor(author);
 		
 		answerRepository.save(answer); 
 		

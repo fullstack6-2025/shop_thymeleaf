@@ -28,4 +28,7 @@ public class Answer {
     @ManyToOne                              // 하나의 질문 많은 답변을 저장 할 수 있다.  
     private Question question;  
 
+    @ManyToOne
+    private SiteUser author;
+
 }

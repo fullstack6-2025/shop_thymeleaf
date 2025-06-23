@@ -53,7 +53,8 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
     
-    // SpringSecurity 에서 인증을 처리해주는 객체 
+    // SpringSecurity 에서 인증/허가 을 처리해주는 객체 
+    // UserSecurityService.java를 사용해서 인증과 허가를 처리한다. 
     @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();

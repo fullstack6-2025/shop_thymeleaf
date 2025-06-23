@@ -1,10 +1,13 @@
 package com.shop.service;
 
+import java.util.Optional;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.shop.entity.SiteUser;
+import com.shop.exception.DataNotFoundException;
 import com.shop.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -31,6 +34,17 @@ public class UserService {
         return user;
 
     }
+    
+    // Principal 에서 현재 로그온한 username을 읽어와서 SiteUser 객체를 리턴 받는 메소드
+    public SiteUser getUser(String username) {
+        Optional<SiteUser> siteUser = this.userRepository.findByusername(username);
+        if (siteUser.isPresent()) {
+            return siteUser.get();
+        } else {
+            throw new DataNotFoundException("사용자를 찾을 수 없습니다.");
+        }
+    }
+
 
 
 }
