@@ -3,6 +3,7 @@ package com.shop.controller;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,6 +34,7 @@ public class AnswerController {
 	private final UserService userService;
 	
 	// 답변 등록 
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/create/{id}")
 	public String createAnswer(
 			Model model, 
@@ -44,8 +46,9 @@ public class AnswerController {
 			Principal principal	
 			) {
 		// principal : client 의 로그인한 계정을 서버에서 가지고 오는 객체 
-		System.out.println("Principal : " + principal.getName());
-		
+		if ( principal.getName() != null) {
+			System.out.println("Principal : " + principal.getName());
+		}
 		// 답변을 넣은 질문을 가지고 온다. 
 		Question question = questionService.getQuestion(id); 
 		// 답변에 넣을 SiteUser 객체를 가지고 온다. 

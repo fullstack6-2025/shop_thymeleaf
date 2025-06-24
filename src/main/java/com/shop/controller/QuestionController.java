@@ -1,9 +1,11 @@
 package com.shop.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,9 +21,11 @@ import com.shop.dto.AnswerForm;
 import com.shop.dto.QuestionForm;
 import com.shop.entity.Answer;
 import com.shop.entity.Question;
+import com.shop.entity.SiteUser;
 import com.shop.repository.QuestionRepository;
 import com.shop.service.AnswerService;
 import com.shop.service.QuestionService;
+import com.shop.service.UserService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -56,7 +60,8 @@ public class QuestionController {
 //	private final QuestionRepository questionRepository;
 
 	private final QuestionService questionService; 
-	private final AnswerService answerService; 
+	private final AnswerService answerService;
+	private final UserService userService;
 	
 	// 질문 리스트 페이지
 	@GetMapping("/list")				//http://localhost:8082/question/list    ( 1.client 요청 ) 
@@ -125,7 +130,7 @@ public class QuestionController {
 	}
 	
 	// 질문 등록 뷰 페이지 처리 
-	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/create")
 	public String questionCreate(
 			 QuestionForm questionForm
@@ -135,13 +140,18 @@ public class QuestionController {
 	}
 	
 	// 질문 등록을 받아서 DB에 저장 
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/create")
 	public String questionCreat(
 //			@RequestParam(value="subject") String subject, 
 //			@RequestParam("content") String content
 			@Valid QuestionForm questionForm, 
-			BindingResult bindingResult
+			BindingResult bindingResult, 
+			Principal principal
 			) {
+		
+		
+		SiteUser siteUser = this.userService.getUser(principal.getName());
 		/*
 		System.out.println("질문 등록 Post 요청 성공 ");
 		System.out.println(subject);
@@ -158,7 +168,7 @@ public class QuestionController {
 
 		
 		// DB에 질문을 저장 
-		questionService.create(questionForm.getSubject(), questionForm.getContent()); 
+		questionService.create(questionForm.getSubject(), questionForm.getContent(), siteUser); 
 		
 		
 		// 질문을 DB에 저장후 질문 리스트 페이지로 이동 
