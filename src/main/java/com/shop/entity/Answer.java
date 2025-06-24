@@ -1,12 +1,14 @@
 package com.shop.entity;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +25,8 @@ public class Answer {
     private String content;
 
     private LocalDateTime createDate; 
+    
+    private LocalDateTime modifyDate;
 
     // Answer(자식) : Many, Question(부모)  : One 
     @ManyToOne                              // 하나의 질문 많은 답변을 저장 할 수 있다.  
@@ -30,5 +34,9 @@ public class Answer {
 
     @ManyToOne
     private SiteUser author;
+    
+    @ManyToMany
+    Set<SiteUser> voter;
+
 
 }

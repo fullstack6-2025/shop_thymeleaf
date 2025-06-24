@@ -3,6 +3,7 @@ package com.shop.service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.shop.entity.Answer;
 import com.shop.entity.Question;
 import com.shop.entity.SiteUser;
+import com.shop.exception.DataNotFoundException;
 import com.shop.repository.AnswerRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -49,4 +51,34 @@ public class AnswerService {
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
         return this.answerRepository.findByQuestion(question, pageable); 
     }
+    
+    // id를 넣으면 Answer 객체를 돌려주는 메소드
+    public Answer getAnswer(Integer id) {
+        Optional<Answer> answer = this.answerRepository.findById(id);
+        if (answer.isPresent()) {
+            return answer.get();
+        } else {
+            throw new DataNotFoundException("answer not found");
+        }
+    }
+
+    // 답변 수정 메소드
+    public void modify(Answer answer, String content) {
+        answer.setContent(content);
+        answer.setModifyDate(LocalDateTime.now());
+        this.answerRepository.save(answer);
+    }
+    
+    // 답변 삭제 메소드
+    public void delete(Answer answer) {
+        this.answerRepository.delete(answer);
+    }
+    
+    // 답변 추천 메소드
+    public void vote(Answer answer, SiteUser siteUser) {
+        answer.getVoter().add(siteUser);
+        this.answerRepository.save(answer);
+    }
+
+
 }

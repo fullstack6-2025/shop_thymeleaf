@@ -68,6 +68,25 @@ public class QuestionService {
         return this.questionRepository.findAll(pageable);
     }
 
-	
+    // 질문 수정 메소드
+    public void modify(Question question, String subject, String content) {
+        question.setSubject(subject);
+        question.setContent(content);
+        question.setModifyDate(LocalDateTime.now());
+        this.questionRepository.save(question);
+    }
+    
+    // 질문 삭제 메소드 
+    public void delete(Question question) {
+        this.questionRepository.delete(question);
+    }
+
+    // 추천 등록 메소드 
+    public void vote(Question question, SiteUser siteUser) {
+        question.getVoter().add(siteUser);
+        this.questionRepository.save(question);
+    }
+
+
 
 }
