@@ -83,7 +83,9 @@ public class QuestionService {
 
     // 추천 등록 메소드 
     public void vote(Question question, SiteUser siteUser) {
+    	
         question.getVoter().add(siteUser);
+        
         this.questionRepository.save(question);
     }
 
